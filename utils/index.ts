@@ -74,14 +74,13 @@ const client = createClient('jOLJsZlyqtlvrkEzLx7hIXkuIoGintev95xmq9ZQmZzGHzd82QJ
 // Function to generate car image
 export async function generateCarImage(car: CarProps, angle: string) {
     const { make, model, year } = car;
-    const query = `${make} ${model} ${angle}`;  // Create a query string
+    const query = `${make} ${model} ${angle}`;
 
     try {
-        // Fetch images from Pexels
         const response = await client.photos.search({ query, per_page: 1 });
 
-        if (response.photos && response.photos.length > 0) {
-            // Return the first image's URL if available
+        // Check if 'photos' exists in the response
+        if ('photos' in response && response.photos.length > 0) {
             const firstPhoto = response.photos[0];
             return firstPhoto.src.original;  // You can choose another size like large, small, etc.
         } else {
